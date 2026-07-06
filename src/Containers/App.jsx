@@ -12,13 +12,14 @@ class App extends Component {
     }
   }
 
+getAnime = async () => {
+  const response = await fetch(`https://api.jikan.moe/v4/anime?q=${this.state.searchfield}&limit=10`);
+  const data = await response.json();
+  this.setState({ series: data.data });
+  console.log(this.state.series);
+};
 
-componentDidMount() {
-  fetch("https://api.jikan.moe/v4/anime")
-  .then(response => response.json())
-  .then(anime => this.setState({ series: anime.data }));
-  console.log(this.state.series)
-}
+
 
 SearchChange = (event) => {
     this.setState({ searchfield: event.target.value })
