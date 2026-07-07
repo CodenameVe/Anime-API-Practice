@@ -9,36 +9,42 @@ class App extends Component {
     this.state = {
       series: [],
       searchfield: ''
-    }
+    };
+    this.searchTimeout = null;
   }
 
-getAnime = async () => {
-  const response = await fetch(`https://api.jikan.moe/v4/anime?q=${this.state.searchfield}&limit=10`);
+
+getAnime = async (searchTerm) => {
+  const response = await fetch(`https://api.jikan.moe/v4/anime?q=${searchTerm}&limit=25`
+    );
   const data = await response.json();
   this.setState({ series: data.data });
-  console.log(this.state.series);
+  console.log(data);
+};
+
+componentDidMount() {
+  this.getAnime('');
+}
+
+
+SearchChange = (event) => {
+  const searchfield = event.target.value;
+
+  this.setState({ searchfield });
+
+  clearTimeout(this.searchTimeout);
+
+  this.searchTimeout = setTimeout(() => {
+    this.getAnime(searchfield);
+  }, 500);
 };
 
 
 
-SearchChange = (event) => {
-    this.setState({ searchfield: event.target.value })
-    this.setState({ series: this.state.series.filter(series => {
-      return series.title.toLowerCase().includes(event.target.value.toLowerCase());
-    })})
-    console.log(event.target.value)
-  }
-
-
-
   render() {
-    const { series, searchfield } = this.state;
-    const filteredSeries = series.filter(series => {
-      return series.title.toLowerCase().includes(searchfield.toLowerCase());
-      console.log(filteredSeries)
-    })
     return (
       <>
+      <h1 className="app-title">Anime Library</h1>
       <SearchBox  SearchChange={this.SearchChange}/>
       <div>
         <Anime series={this.state.series}/>
