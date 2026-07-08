@@ -18,8 +18,8 @@ getAnime = async (searchTerm) => {
   const response = await fetch(`https://api.jikan.moe/v4/anime?q=${searchTerm}&limit=25`
     );
   const data = await response.json();
-  this.setState({ series: data.data });
-  console.log(data);
+    this.setState({ series: data.data });
+    console.log(data);
 };
 
 componentDidMount() {
@@ -29,12 +29,9 @@ componentDidMount() {
 
 SearchChange = (event) => {
   const searchfield = event.target.value;
-
-  this.setState({ searchfield });
-
+    this.setState({ searchfield });
   clearTimeout(this.searchTimeout);
-
-  this.searchTimeout = setTimeout(() => {
+   this.searchTimeout = setTimeout(() => {
     this.getAnime(searchfield);
   }, 500);
 };

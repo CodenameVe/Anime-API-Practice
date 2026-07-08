@@ -9,11 +9,15 @@ const Anime = ({ series = [] }) => {
     <div className="anime-container">
       {series.map((anime) => (
         <div className="anime-card" key={anime.mal_id}>
-          <img
-            className="anime-image"
-            src={anime.images.jpg.image_url}
-            alt={anime.title}
-          />
+          <a href={anime.url} target="_blank" rel="noopener noreferrer">
+
+            <img
+              className="anime-image"
+              src={anime.images.jpg.image_url}
+              alt={anime.title}
+              
+            />
+          </a>
 
           <div className="anime-overlay">
             <h3>{anime.title}</h3>
